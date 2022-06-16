@@ -18,69 +18,60 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-sm-7">
-                    <?= $this->session->flashdata('message'); ?>
+                {{-- <?= $this->session->flashdata('message'); ?> --}}
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">Rincian Product nanda</h3>
+                            <h3 class="text-center">Rincian Product</h3>
 
                             <hr>
-
+                            
                             <form action="<?= route('checkout') ?>" method="post">
+                                @csrf
                                 <?php foreach ($nota as $n) :
                                     $not = $n->maxKode; ?>
 
                                 <?php endforeach ?>
                                 <?php if (empty($not)) : ?>
-                                <input type="hidden" name="nota" value="TS<?= date('ymd') ?>1">
+                                    <input type="hidden" name="nota" value="TS<?= date('ymd') ?>1">
                                 <?php else : ?>
-                                <input type="hidden" name="nota" value="TS<?= date('ymd') ?><?= $not + 1 ?>">
+                                    <input type="hidden" name="nota" value="TS<?= date('ymd') ?><?= $not + 1 ?>">
                                 <?php endif ?>
                                 <div class="row">
                                     <?php
                                     $subtotal_produk = 0;
                                     $jumlah_produk = 0;
                                     ?>
-                                    <?php foreach ($cart as $key => $value) : ?>
-                                    <input type="hidden" name="id[]" value="<?= $value['id'] ?>">
-                                    <?php
-                                        if ($value['type'] == 'barang') :
-                                            $subtotal_produk += $value['price'] * $value['qty'];
-                                            $jumlah_produk += $value['qty'];
+                                    <?php foreach ($cart as $k) : ?>
+                                        <input type="hidden" name="id[]" value="<?= $k->id ?>">
+                                        <?php
+                                        if ($k->options->type == 'barang') :
+                                            $subtotal_produk += $k->price * $k->qty;
+                                            $jumlah_produk += $k->qty;
                                         ?>
-                                    <div class="col-md-8">
-                                        <?php foreach($value['nm_karyawan'] as $nm_karyawan): ?>
-                                        <span class="badge badge-secondary mr-1">
-                                            <?= $nm_karyawan ?>
-                                        </span>
-                                        <?php endforeach; ?>
-                                        <br><br>
-                                        <img width="80" class="img-thumbnail"
-                                            src="<?= asset('assets') ?>/uploads/produk/<?= $value['picture'] ?>" alt="">
-                                        <span style="margin-left: 20px;">
-                                            <?= $value['name'] ?>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p style="margin-top: 55px;" class="float-right">
-                                            <?= $value['qty'] ?> x <strong>Rp.
-                                                <?= number_format($value['price']) ?>
-                                            </strong>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <hr>
-                                    </div>
-                                    <?php endif; ?>
+                                            <div class="col-md-8">
+                                            <?php foreach($k->options->nm_karyawan as $key => $nm_karyawan): ?>
+                                            @foreach ($nm_karyawan as $d)
+                                                <span class="badge badge-secondary mr-1"><?= $d ?></span>
+                                            @endforeach
+                                            
+                                            <?php endforeach; ?>
+                                            <br><br>
+                                                <img width="80" class="img-thumbnail" src="<?= asset('assets') ?>/uploads/produk/<?= $k->options->picture ?>" alt="">
+                                                <span style="margin-left: 20px;"><?= $k->name ?></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p style="margin-top: 55px;" class="float-right"><?= $k->qty ?> x <strong>Rp.<?= number_format($k->price) ?></strong> </p>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <hr>
+                                            </div>
+                                        <?php endif; ?>
                                     <?php endforeach ?>
                                     <div class="container">
-
-                                        <strong style="font-size: 20px;">Subtotal
-                                            <?= $jumlah_produk ?> produk
-                                        </strong> <strong style="float: right;font-size: 20px;">Rp.
-                                            <?= number_format($subtotal_produk) ?>
-                                        </strong>
+                                        
+                                        <strong style="font-size: 20px;">Subtotal <?= $jumlah_produk ?> produk</strong> <strong style="float: right;font-size: 20px;">Rp. <?= number_format($subtotal_produk) ?></strong>
                                         <hr>
-                                        <!-- <strong style="font-size: 20px;">Total</strong> <strong style="float: right; font-size: 22px;">Rp. <?= number_format($subtotal) ?></strong> -->
+                              
                                     </div>
 
                                     <hr>
@@ -89,10 +80,7 @@
                                     $jumlah_servis = 0;
                                     ?>
                                     <?php $total = $subtotal_produk + $subtotal_order ?>
-                                    <!-- <div class="container">
-                                    <strong style="font-size: 20px;">Total</strong> <strong style="float: right; font-size: 22px;">Rp. <?= number_format($subtotal_produk + $subtotal_order) ?></strong>
-                                    <hr>
-                                </div> -->
+                                 
 
                                     <div class="container">
                                         <h3 class="text-center mb-4">Pembayaran</h3>
@@ -101,38 +89,31 @@
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-md-4 col-form-label">Cash</label>
                                             <div class="col-md-6">
-                                                <input type="number" name="cash" class="form-control pembayaran"
-                                                    value="0" id="cash">
+                                                <input type="number" name="cash" class="form-control pembayaran" value="0" id="cash">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-md-4 col-form-label">BCA Debit</label>
                                             <div class="col-md-6">
-                                                <input type="number" name="bca_debit" class="form-control pembayaran"
-                                                    value="0" id="bca_debit">
+                                                <input type="number" name="bca_debit" class="form-control pembayaran" value="0" id="bca_debit">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-md-4 col-form-label">BCA Kredit</label>
                                             <div class="col-md-6">
-                                                <input type="number" name="bca_kredit" class="form-control pembayaran"
-                                                    value="0" id="bca_kredit">
+                                                <input type="number" name="bca_kredit" class="form-control pembayaran" value="0" id="bca_kredit">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="staticEmail" class="col-md-4 col-form-label">Mandiri
-                                                Debit</label>
+                                            <label for="staticEmail" class="col-md-4 col-form-label">Mandiri Debit</label>
                                             <div class="col-md-6">
-                                                <input type="number" name="mandiri_debit"
-                                                    class="form-control pembayaran" value="0" id="mandiri_debit">
+                                                <input type="number" name="mandiri_debit" class="form-control pembayaran" value="0" id="mandiri_debit">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="staticEmail" class="col-md-4 col-form-label">Mandiri
-                                                Kredit</label>
+                                            <label for="staticEmail" class="col-md-4 col-form-label">Mandiri Kredit</label>
                                             <div class="col-md-6">
-                                                <input type="number" name="mandiri_kredit"
-                                                    class="form-control pembayaran" value="0" id="mandiri_kredit">
+                                                <input type="number" name="mandiri_kredit" class="form-control pembayaran" value="0" id="mandiri_kredit">
                                             </div>
                                         </div>
 
@@ -151,23 +132,21 @@
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-md-4 col-form-label">No Meja</label>
                                             <div class="col-md-6">
-                                                <input type="text" name="no_meja" class="form-control ">
+                                                <input type="text" name="no_meja" class="form-control " >
                                             </div>
                                         </div>
-
+                                        
                                         <div class="form-group row">
                                             <label for="staticEmail" class="col-md-4 col-form-label">No Nota</label>
                                             <div class="col-md-6">
-                                                <input type="text" name="invoice" class="form-control ">
+                                                <input type="text" name="invoice" class="form-control " >
                                             </div>
-                                        </div>
+                                        </div>  
 
                                         <hr>
                                         <input type="hidden" name="total" id="total" value="<?= $total; ?>">
-
-                                        <button class="btn  btn-costume btn-block" id="btn_bayar" disabled>PROSES BAYAR
-                                            <i class="fas fa-money-check-alt majoo"></i> <i
-                                                class="fa fa-chevron-right majoo" style="float: right; "></i></button>
+                                       
+                                        <button class="btn  btn-costume btn-block" id="btn_bayar" disabled >PROSES BAYAR <i class="fas fa-money-check-alt majoo"></i> <i class="fa fa-chevron-right majoo" style="float: right; "></i></button>
                                     </div>
                                 </div>
                             </form>

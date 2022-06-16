@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\Kategori;
+use App\Models\Pembelian;
 use App\Models\Produk;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -19,7 +21,7 @@ class PenjualanController extends Controller
         $data = [
             'title' => 'Penjulan',
             'kategori' => Kategori::all(),
-            'produk' => Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->orderBy('tb_produk.id_produk', 'DESC')->get(),
+            'produk' => Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->orderBy('tb_produk.id_produk', 'ASC')->get(),
             'id_lokasi' => $id_lokasi,
         ];
         Cart::destroy();
@@ -231,7 +233,8 @@ class PenjualanController extends Controller
 
     public function checkout(Request $r)
     {
-        $admin = Auth::user()->id;
+        $id_user = User::where('nama', strtolower(Session::get('nama')))->first();
+        $admin = $id_user->id_user;
         $q = DB::select("SELECT MAX(RIGHT(no_invoice,4)) AS kd_max FROM tb_kd_invoice WHERE DATE(tanggal)=CURDATE()");
         $kd = "";
         if ($q) {
@@ -294,18 +297,21 @@ class PenjualanController extends Controller
                         $nm_karyawan = '';
                         $length = count($c->options->nm_karyawan);
                         $number = 1;
-                        foreach ($c->options->nm_karyawan as $karyawan) {
-                            $nm_karyawan .= $karyawan;
-                            if ($number !== $length) {
-                                $nm_karyawan .= ', ';
+                        foreach ($c->options->nm_karyawan as $key => $nm_karyawan) {
+                            foreach($nm_karyawan as $nm) {
+                                $nm_karyawan = $nm;
+                                if ($number !== $length) {
+                                    $nm_karyawan .= ', ';
+                                }
+                                $number++;
                             }
-                            $number++;
+                            
                         }
-
+                        
 
                         $d_produk = Produk::where('id_produk', $c->id)->where('id_lokasi', $id_lokasi)->first();
                         $data = [
-                            'id_karyawan'  => $c['id_karyawan'][0],
+                            'id_karyawan'  => $c->options->id_karyawan[0],
                             'id_produk' => $c->id,
                             'nm_karyawan' => $nm_karyawan,
                             'no_nota' => $no_nota,
@@ -319,9 +325,9 @@ class PenjualanController extends Controller
                             'no_meja' => $no_meja,
                             'jml_komisi' => $d_produk->komisi
                         ];
-                        DB::table('tb_pembelian')->insert($data);
-                        $id_pembelian = $this->db->insert_id();
-
+                        $dataInsert = Pembelian::create($data);
+                        $id_pembelian = $dataInsert->id;
+                        
 
 
                         $stok_baru = [
@@ -334,8 +340,8 @@ class PenjualanController extends Controller
                             // $komisi1 = $subharga * $produk['komisi'] /100;
                             if ($d_produk->komisi > 0) {
                                 $komisi1 = $subharga * $d_produk->komisi / 100;
-                                $komisi = $komisi1 / count($c['id_karyawan']);
-                                foreach ($c['id_karyawan'] as $id_karyawan) {
+                                $komisi = $komisi1 / count($c->options->id_karyawan);
+                                foreach ($c->options->id_karyawan as $id_karyawan) {
                                     $data_komisi = [
                                         'id_pembelian' => $id_pembelian,
                                         'id_kry'  => $id_karyawan,
