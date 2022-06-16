@@ -145,7 +145,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="no_nota" value="<?= $value->no_nota ?>">
+                    <input type="hidden" name="no_nota" value="<?= $a->no_nota ?>">
                     <input class="form-control" type="text" name="ket_void" required>
                 </div>
                 <div class="modal-footer">
