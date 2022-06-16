@@ -361,7 +361,7 @@
           var rowid = $(this).attr("id");
           $.ajax({
             url: "{{route('delete_cart')}}",
-            method: "POST",
+            method: "GET",
             data: {
               rowid: rowid
             },

@@ -68,7 +68,7 @@ Route::get('/get_karyawan', [PenjualanController::class, 'get_karyawan'])->name(
 Route::get('/get_cart', [PenjualanController::class, 'get_cart'])->name('get_cart');
 Route::get('/cart', [PenjualanController::class, 'cart'])->name('cart');
 Route::get('/get_modal', [PenjualanController::class, 'get_modal'])->name('get_modal');
-Route::post('/delete_cart', [PenjualanController::class, 'delete_cart'])->name('delete_cart');
+Route::get('/delete_cart', [PenjualanController::class, 'delete_cart'])->name('delete_cart');
 Route::get('/min_cart', [PenjualanController::class, 'min_cart'])->name('min_cart');
 Route::get('/plus_cart', [PenjualanController::class, 'plus_cart'])->name('plus_cart');
 Route::post('/checkout', [PenjualanController::class, 'checkout'])->name('checkout');

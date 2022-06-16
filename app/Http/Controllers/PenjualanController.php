@@ -56,10 +56,11 @@ class PenjualanController extends Controller
                     $subtotal_produk += $k->price * $k->qty;
                     $jumlah += $k->qty;
                     echo '<div class="col-sm-12 col-md-12">';
-                    // foreach ($k->options->nm_karyawan as $key => $nm_karyawan) {
-                    //     echo  '<span class="badge badge-secondary">' . $nm_karyawan . '</span> ';
-                    // }
-
+                    foreach ($k->options->nm_karyawan as $key => $nm_karyawan) {
+                        foreach($nm_karyawan as $c) {
+                            echo  '<span class="badge badge-secondary">' . $c . '</span> ';
+                        }
+                    }
                     echo '<p>' . $k->name . '</p>               
                     </div>
                     <div class="col-sm-6 col-md-6">
@@ -162,9 +163,7 @@ class PenjualanController extends Controller
                     $kry = Karyawan::where('kd_karyawan', $id_kr)->first();
                     $karyawan[] = preg_replace("/[^a-zA-Z0-9]/", " ", $kry->nm_karyawan);
                 }
-
                 $harga = $detail->harga;
-
                 $data = array(
                     'id' => $id,
                     'qty'     => $r->jumlah,
@@ -175,8 +174,9 @@ class PenjualanController extends Controller
                         'satuan'  => $satuan,
                         'catatan' => $catatan,
                         'id_karyawan'   => $id_karyawan,
-                        'nm_karyawan'   => $karyawan,
+                        'nm_karyawan'   => [$karyawan],
                         'type'    => 'barang',
+                        
                     ],
 
                 );
@@ -204,7 +204,6 @@ class PenjualanController extends Controller
 
 
         $id_produk = $r->id_produk;
-        $produk = $this->db->get_where('tb_produk', array('id_produk' => $id_produk))->result_array()[0];
         $produk = Produk::where('id_produk', $id_produk)->first();
 
         $stok_produk = $produk->stok  - 1;
