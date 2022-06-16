@@ -318,6 +318,7 @@
                 kode.push($(this).val())
                 
             });
+            alert(kode)
           $.ajax({
             url: "{{route('cart')}}",
             method: 'get',
