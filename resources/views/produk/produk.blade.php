@@ -19,8 +19,9 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="float-left">Daftar Produk aldi</h3>
-                            <a href="#" class="btn btn-costume btn-sm float-right" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus"></i> Produk</a>
+                            <h3 class="float-left">Daftar Produk nanda</h3>
+                            <a href="#" class="btn btn-costume btn-sm float-right" data-toggle="modal"
+                                data-target="#tambah"><i class="fa fa-plus"></i> Produk</a>
                         </div>
                         <div class="card-body">
                             <div id="table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
