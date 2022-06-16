@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriSatuanController;
 use App\Http\Controllers\LoginController;
@@ -111,4 +112,9 @@ Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
 Route::post('/tambahKaryawan', [KaryawanController::class, 'tambah'])->name('tambahKaryawan');
 Route::post('/editKaryawan', [KaryawanController::class, 'edit'])->name('editKaryawan');
 Route::get('/hapusKaryawan', [KaryawanController::class, 'hapus'])->name('hapusKaryawan');
+
+
+// invoice
+Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
+
 // ---------------------------------------------
