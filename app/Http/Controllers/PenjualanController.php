@@ -68,13 +68,13 @@ class PenjualanController extends Controller
                     <div class="col-sm-6 col-md-6 text-center text-lg">
                     <div class="row">
                         <div class="col-sm-4 col-md-4">
-                        <a class="min_cart mr-2" id="' . $k->rowid . '" qty="' . $k->qty . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-minus"></i></a>
+                        <a class="min_cart mr-2" id="' . $k->rowId . '" qty="' . $k->qty . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-minus"></i></a>
                         </div>
                         <div class="col-sm-4 col-md-4">
-                        <a class="delete_cart mr-2" id="' . $k->rowid . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-times"></i></a>
+                        <a class="delete_cart mr-2" id="' . $k->rowId . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-times"></i></a>
                         </div>
                         <div class="col-sm-4 col-md-4">
-                        <a class="plus_cart mr-2" id="' . $k->rowid . '" qty="' . $k->qty . '" id_produk="' . $k->id . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-plus"></i></a>
+                        <a class="plus_cart mr-2" id="' . $k->rowId . '" qty="' . $k->qty . '" id_produk="' . $k->id . '" href="javascript:void(0)" style="margin-top: 50px;"><i class="fa fa-plus"></i></a>
                         </div>
                     </div>            
                     </div>
