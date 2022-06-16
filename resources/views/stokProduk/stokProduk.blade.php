@@ -21,7 +21,7 @@
                         <div class="card-header">
                             <h3 class="float-left">Daftar Stok Produk</h3>
                             <a href="{{ route('buatStokProduk') }}" class="btn btn-costume btn-sm float-right ml-2" ><i class="fa fa-truck-loading"></i> Stok Masuk</a>
-                            <a href="#" class="btn btn-costume btn-sm float-right ml-2" data-toggle="modal" data-target="#tambah"><i class="fa fa-eye"></i> view</a>
+                            <a href="#" class="btn btn-costume btn-sm float-right ml-2" data-toggle="modal" data-target="#view"><i class="fa fa-eye"></i> view</a>
                         </div>
                         <div class="card-body">
                             <div id="table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -41,7 +41,7 @@
                                                 <?php 
                                                 $i=1;
                                                 foreach ($stokProduk as $d) : ?>
-                                                    <tr class="clickable-row" id="<?= $d->kode_stok_produk ?>">
+                                                    <tr onclick="window.location = '{{route('detailStokProduk', ['kode' => $d->kode_stok_produk])}}'">
                                                         <td><?= $i++ ?></td>
                                                         <td><?= date('d M Y, H:i', strtotime($d->tgl_input)) ?></td>
                                                         <td><?= $d->kode_stok_produk ?></td>
@@ -67,8 +67,10 @@
     </div>
     <!-- /.content -->
 </div>
+
+{{-- tambah --}}
 <form action="" method="GET">
-    <div class="modal fade" id="modal-view">
+    <div class="modal fade" id="view">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header btn-costume">
@@ -79,29 +81,25 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <table>
-                            <tr>
-                                <td ><label for="">Tanggal</label></td>
-                                <td>:</td>
-                                <td> <input style="width: 350px;" class="form-control" type="input" value="<?= date("Y-m-d"); ?>" name="global" id="global"></td>
-                            </tr>
-                        </table>
-
-                        <input class="form-control" type="date" value="" id="tgl1" name="tgl1" hidden>  
-                        <input class="form-control" type="date" value="" id="tgl2" name="tgl2" hidden> 
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="">Dari</label>
+                                <input class="form-control" type="date" value="" id="tgl1" name="tgl1">  
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="">Sampai</label>
+                                <input class="form-control" type="date" value="" id="tgl2" name="tgl2"> 
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-costume" >Lanjutkan</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-costume">Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-{{-- tambah --}}
-
 
 {{-- --------------------- --}}
 
@@ -133,13 +131,4 @@
     });
 </script>  
 @endif
-<script>
-    $(document).ready(function(){
-        $(".clickable-row").click(function (e) { 
-            e.preventDefault();
-            var kode_stok_produk = $(this).attr("id");
-            window.location.href = '{{route("detailStokProduk")}}?kode=' + kode_stok_produk;
-        });
-    })
-</script>
 @endsection

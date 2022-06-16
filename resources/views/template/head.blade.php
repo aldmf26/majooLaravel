@@ -53,12 +53,83 @@
 
 </head>
 <style>
+    .bg-costume {
+      background-color: #00B7B5;
+    }
+
+
+    .layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*=navbar]) {
+      background-color: #00B7B5;
+    }
+
+    p {
+      /* font-weight: bold; */
+      color: #FFFFFF;
+    }
+
+    .majoo{
+      color: #FFFFFF;
+    }
+
+    
+    .nav-link:hover {
+        background-color: #00B7B5;
+    }
+  
+
+    body {
+      color: #787878;
+    }
+
+    .page-item.active .page-link {
+      z-index: 3;
+      color: #fff;
+      background-color: #00B7B5;
+      border-color: #00B7B5;
+    }
+
+    .page-link {
+      position: relative;
+      display: block;
+      padding: .5rem .75rem;
+      margin-left: -1px;
+      line-height: 1.25;
+      color: #F7BD9C;
+      background-color: #fff;
+      border: 1px solid #dee2e6;
+    }
+
+    .start-date .end-date {
+      background-color: #00B7B5;
+    }
+
     .btn-costume {
-        background-color: #00B7B5;
-        color: white;
+      background-color: #00B7B5;
+      color: white;
     }
-    .btn-costume:hover {
-        background-color: #00B7B5;
-        color: white;
+
+    .btn-costume:hover{
+      color: white;
     }
-</style>
+
+    .btn-peace {
+      background-color: #00B7B5;
+      color: white;
+    }
+
+    [class*=sidebar-dark] .brand-link {
+      border-bottom: 1px solid #00B7B5;
+      color: rgba(255, 255, 255, .8);
+    }
+
+
+  </style>
+  <style>
+    .table-hover tbody tr:hover td,
+    .table-hover tbody tr:hover th {
+      background-color: #00B7B5;
+      text-decoration-color: white;
+      color: white;
+      cursor: pointer;
+    }
+  </style>

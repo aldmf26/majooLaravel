@@ -220,6 +220,44 @@
 @endforeach
 {{-- ------------------- --}}
 
+<form action="<?= route('updatePermission') ?>" method="post">
+  @csrf
+  <!-- Modal -->
+  <div class="modal fade" id="akses" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header btn-costume">
+          <h5 class="modal-title majoo" id="exampleModalLabel">Permission</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+        <input type="hidden" name="id_user" id="id_user">
+        
+          <div class="row justify-content-center">
+                <div class="form-group col-md-3">
+                  <label for="list_kategori">Permission</label>
+                </div>
+              </div>
+
+              <div class="row data_permission">
+               
+                
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-costume">Save/Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
 @endsection
 @section('script')
 @if (Session::get('sukses'))
@@ -246,4 +284,21 @@
     });
 </script>  
 @endif
+<script>      
+
+  $(document).ready(function(){
+    $('.permission').click(function(){
+      var id_user = $(this).attr('id_user');
+      $('#id_user').val(id_user);
+
+      $(".data_permission").load("{{route('get_permission')}}?id_user="+id_user, "data", function (response, status, request) {
+        this; // dom element
+        
+      });
+  
+
+    });
+  });
+
+</script>
 @endsection

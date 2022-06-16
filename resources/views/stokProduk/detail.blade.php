@@ -75,7 +75,7 @@
                                             <a href="<?= route('stokProduk') ?>" class="btn btn-secondary">Kembali</a>
             
                                             <?php if($cek_status->status != 'Selesai') :?>
-                                                <a href="<?= route('deleteStok', ['kode_stok_produk' => $kode_stok_produk]) ?>" class="btn btn-outline-secondary" onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash"></i></a>
+                                                <a href="<?= route('deleteStok', ['kode_stok_produk' => $kode_stok_produk]) ?>" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus?')"><i class="fas fa-trash text-danger"></i></a>
                                                
                                                 <button type="submit" name="action" value="selesai" class="btn btn-costume float-right ml-2">Selesai</button>
                                             

@@ -28,8 +28,8 @@
                                     <div class="col-sm-12">
                                         <table class="table" id="table"> 
                                             <thead>
-                                                <tr>
-                                                    <td>No</td>
+                                                <tr style="font-weight: bold;">
+                                                    <td  >No</td>
                                                     <td>Nama Produk</td>
                                                     <td>SKU</td>
                                                     <td>Kategori</td>

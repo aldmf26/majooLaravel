@@ -99,6 +99,7 @@ class ProdukController extends Controller
     // stok produk
     public function stokProduk(Request $r)
     {
+        $id_lokasi = Session::get('id_lokasi');
         $hari  = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
         if(empty($r->tgl1)){
             $tgl1   = date('Y-m-').'01';
@@ -111,7 +112,7 @@ class ProdukController extends Controller
         $data = [
             'title' => 'Stok Produk',
             'stokProduk' => DB::select("SELECT a.*, SUM(a.debit) as debit, SUM(a.kredit) as kredit FROM tb_stok_produk as a
-            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' 
+            WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2' AND a.id_lokasi = '$id_lokasi'
             GROUP BY a.kode_stok_produk
             ORDER BY a.id_stok_produk DESC")
         ];

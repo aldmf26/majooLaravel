@@ -57,6 +57,10 @@
         max-width: 1100px;
         margin: 2rem auto;
     }
+    .modal-body {
+        max-height: 500px;
+        overflow-y: auto;
+    }
 </style>
 <form action="{{ route('inputProdukMasuk') }}" method="post">
     @csrf
