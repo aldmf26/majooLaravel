@@ -18,14 +18,15 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-sm-7">
-                <?= $this->session->flashdata('message'); ?>
+                {{-- <?= $this->session->flashdata('message'); ?> --}}
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">Rincian Product lkasjdlkasfjlksdfjkl</h3>
+                            <h3 class="text-center">Rincian Product</h3>
 
                             <hr>
                             
                             <form action="<?= route('checkout') ?>" method="post">
+                                @csrf
                                 <?php foreach ($nota as $n) :
                                     $not = $n->maxKode; ?>
 
@@ -40,23 +41,26 @@
                                     $subtotal_produk = 0;
                                     $jumlah_produk = 0;
                                     ?>
-                                    <?php foreach ($cart as $key => $value) : ?>
-                                        <input type="hidden" name="id[]" value="<?= $value['id'] ?>">
+                                    <?php foreach ($cart as $k) : ?>
+                                        <input type="hidden" name="id[]" value="<?= $k->id ?>">
                                         <?php
-                                        if ($value['type'] == 'barang') :
-                                            $subtotal_produk += $value['price'] * $value['qty'];
-                                            $jumlah_produk += $value['qty'];
+                                        if ($k->options->type == 'barang') :
+                                            $subtotal_produk += $k->price * $k->qty;
+                                            $jumlah_produk += $k->qty;
                                         ?>
                                             <div class="col-md-8">
-                                            <?php foreach($value['nm_karyawan'] as $nm_karyawan): ?>
-                                            <span class="badge badge-secondary mr-1"><?= $nm_karyawan ?></span>
+                                            <?php foreach($k->options->nm_karyawan as $key => $nm_karyawan): ?>
+                                            @foreach ($nm_karyawan as $d)
+                                                <span class="badge badge-secondary mr-1"><?= $d ?></span>
+                                            @endforeach
+                                            
                                             <?php endforeach; ?>
                                             <br><br>
-                                                <img width="80" class="img-thumbnail" src="<?= asset('assets') ?>/uploads/produk/<?= $value['picture'] ?>" alt="">
-                                                <span style="margin-left: 20px;"><?= $value['name'] ?></span>
+                                                <img width="80" class="img-thumbnail" src="<?= asset('assets') ?>/uploads/produk/<?= $k->options->picture ?>" alt="">
+                                                <span style="margin-left: 20px;"><?= $k->name ?></span>
                                             </div>
                                             <div class="col-md-4">
-                                                <p style="margin-top: 55px;" class="float-right"><?= $value['qty'] ?> x <strong>Rp.<?= number_format($value['price']) ?></strong> </p>
+                                                <p style="margin-top: 55px;" class="float-right"><?= $k->qty ?> x <strong>Rp.<?= number_format($k->price) ?></strong> </p>
                                             </div>
                                             <div class="col-md-12">
                                                 <hr>
@@ -67,7 +71,7 @@
                                         
                                         <strong style="font-size: 20px;">Subtotal <?= $jumlah_produk ?> produk</strong> <strong style="float: right;font-size: 20px;">Rp. <?= number_format($subtotal_produk) ?></strong>
                                         <hr>
-                                        <!-- <strong style="font-size: 20px;">Total</strong> <strong style="float: right; font-size: 22px;">Rp. <?= number_format($subtotal) ?></strong> -->
+                              
                                     </div>
 
                                     <hr>
@@ -76,10 +80,7 @@
                                     $jumlah_servis = 0;
                                     ?>
                                     <?php $total = $subtotal_produk + $subtotal_order ?>
-                                    <!-- <div class="container">
-                                    <strong style="font-size: 20px;">Total</strong> <strong style="float: right; font-size: 22px;">Rp. <?= number_format($subtotal_produk + $subtotal_order) ?></strong>
-                                    <hr>
-                                </div> -->
+                                 
 
                                     <div class="container">
                                         <h3 class="text-center mb-4">Pembayaran</h3>
