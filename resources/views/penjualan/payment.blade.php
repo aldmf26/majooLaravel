@@ -21,7 +21,7 @@
                 <?= $this->session->flashdata('message'); ?>
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="text-center">Rincian Product</h3>
+                            <h3 class="text-center">Rincian Product lkasjdlkasfjlksdfjkl</h3>
 
                             <hr>
                             
