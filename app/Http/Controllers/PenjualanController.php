@@ -24,7 +24,7 @@ class PenjualanController extends Controller
             'produk' => Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->orderBy('tb_produk.id_produk', 'ASC')->get(),
             'id_lokasi' => $id_lokasi,
         ];
-        Cart::destroy();
+        // Cart::destroy();
         return view('penjualan.penjualan', $data);
     }
 
@@ -59,14 +59,14 @@ class PenjualanController extends Controller
                     $jumlah += $k->qty;
                     echo '<div class="col-sm-12 col-md-12">';
                     foreach ($k->options->nm_karyawan as $key => $nm_karyawan) {
-                        foreach($nm_karyawan as $c) {
+                        foreach ($nm_karyawan as $c) {
                             echo  '<span class="badge badge-secondary">' . $c . '</span> ';
                         }
                     }
-                    echo '<p>' . $k->name . '</p>               
+                    echo '<p style="color:#787878">' . $k->name . '</p>               
                     </div>
                     <div class="col-sm-6 col-md-6">
-                    <p>' . $k->qty . ' x <strong>Rp.' . number_format($k->price) . '</strong> </p>
+                    <p style="color:#787878">' . $k->qty . ' x <strong>Rp.' . number_format($k->price) . '</strong> </p>
                     </div>
                     <div class="col-sm-6 col-md-6 text-center text-lg">
                     <div class="row">
@@ -117,7 +117,7 @@ class PenjualanController extends Controller
             echo '<div class="col-lg-2 col-4">
                             <label class="btn btn-default buying-selling">
                             <div class="checkbox-group required">
-                                <input type="checkbox" name="kd_karyawan[]" id value="' . $k->kd_karyawan . '" autocomplete="off" class="cart_id_karyawan option1">
+                                <input type="checkbox" kode="' . $k->kd_karyawan . '" name="kd_karyawan[]" id value="' . $k->kd_karyawan . '" autocomplete="off" class="cart_id_karyawan option1">
                             </div>	
                                 <span class="radio-dot"></span>
                                 <span class="buying-selling-word">' . $k->nm_karyawan . '</span>
@@ -178,7 +178,7 @@ class PenjualanController extends Controller
                         'id_karyawan'   => $id_karyawan,
                         'nm_karyawan'   => [$karyawan],
                         'type'    => 'barang',
-                        
+
                     ],
 
                 );
@@ -298,16 +298,17 @@ class PenjualanController extends Controller
                         $length = count($c->options->nm_karyawan);
                         $number = 1;
                         foreach ($c->options->nm_karyawan as $key => $nm_karyawan) {
-                            foreach($nm_karyawan as $nm) {
+                            foreach ($nm_karyawan as $nm) {
                                 $nm_karyawan = $nm;
                                 if ($number !== $length) {
                                     $nm_karyawan .= ', ';
                                 }
                                 $number++;
                             }
-                            
                         }
-                        
+
+                        dd($nm_karyawan);
+
 
                         $d_produk = Produk::where('id_produk', $c->id)->where('id_lokasi', $id_lokasi)->first();
                         $data = [
@@ -327,7 +328,7 @@ class PenjualanController extends Controller
                         ];
                         $dataInsert = Pembelian::create($data);
                         $id_pembelian = $dataInsert->id;
-                        
+
 
 
                         $stok_baru = [
