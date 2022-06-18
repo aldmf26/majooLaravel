@@ -11,6 +11,7 @@ use App\Http\Controllers\OpnameController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Void_controller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -87,7 +88,7 @@ Route::get('/excel_penjualan_produk', [listPenjualanController::class, 'excel_pe
 
 
 Route::get('/invoice', [ProdukController::class, 'index'])->name('invoice');
-Route::get('/dataVoid', [ProdukController::class, 'index'])->name('dataVoid');
+
 Route::get('/komisiPenjualan', [ProdukController::class, 'index'])->name('komisiPenjualan');
 Route::get('/laporan', [ProdukController::class, 'index'])->name('laporan');
 
@@ -131,5 +132,7 @@ Route::get('/hapusKaryawan', [KaryawanController::class, 'hapus'])->name('hapusK
 
 // invoice
 Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
+Route::post('/void_penjualan', [InvoiceController::class, 'void_penjualan'])->name('void_penjualan');
+Route::get('/dataVoid', [Void_controller::class, 'index'])->name('dataVoid');
 
 // ---------------------------------------------

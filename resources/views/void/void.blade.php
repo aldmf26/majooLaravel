@@ -19,13 +19,8 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="float-left">Daftar Invoice Penjualan</h3>
-                            <button data-toggle="modal" data-target="#modal-view"
-                                class="btn btn-sm btn-costume float-right ml-2"><i class="fas fa-eye majoo"></i>
-                                View</button>
-                            <button data-toggle="modal" data-target="#modal-summary"
-                                class="btn btn-sm btn-costume float-right ml-2"><i class="fas fa-print majoo"></i>
-                                Summary</button><br><br>
+                            <h3 class="float-left">Daftar Void Penjualan</h3>
+                            <br><br>
                         </div>
                         <div class="card-body">
                             <div id="table_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -34,23 +29,13 @@
                                         <table class="table " width="100%" id="table">
                                             <thead>
                                                 <tr>
-                                                    <th rowspan="2">#</th>
-                                                    <th rowspan="2">NO NOTA</th>
-                                                    <th rowspan="2">LOKASI</th>
-                                                    <th rowspan="2">JAM</th>
-                                                    <th colspan="2" class="text-center">MANDIRI</th>
-                                                    <th colspan="2" class="text-center">BCA</th>
-                                                    <th rowspan="2">CASH</th>
-                                                    <th rowspan="2">TOTAL</th>
-                                                    <th rowspan="2">BAYAR</th>
-                                                    <th rowspan="2">TANGGAL</th>
-                                                    <th rowspan="2">AKSES </th>
-                                                </tr>
-                                                <tr>
-                                                    <th>KREDIT</th>
-                                                    <th>DEBIT</th>
-                                                    <th>KREDIT</th>
-                                                    <th>DEBIT</th>
+                                                    <th>#</th>
+                                                    <th>NO NOTA</th>
+                                                    <th>TOTAL</th>
+                                                    <th>BAYAR</th>
+                                                    <th>TANGGAL</th>
+                                                    <th>Void</th>
+                                                    <th>Ket Void</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,26 +44,13 @@
                                                 <tr>
                                                     <td>{{$i++}}</td>
                                                     <td><a href="">{{$a->no_nota}}</a></td>
-                                                    <td>{{$a->lokasi}}</td>
-                                                    <td>{{date('H:i', strtotime($a->tgl_input))}}</td>
-                                                    <td>{{ number_format($a->mandiri_kredit,0)}}</td>
-                                                    <td>{{ number_format($a->mandiri_debit,0)}}</td>
-                                                    <td>{{ number_format($a->bca_kredit,0)}}</td>
-                                                    <td>{{ number_format($a->bca_debit,0)}}</td>
-                                                    <td>{{ number_format($a->cash,0)}}</td>
                                                     <td>{{ number_format($a->total,0)}}</td>
                                                     <td>{{ number_format($a->bayar,0)}}</td>
                                                     <td>{{ date('d/m/Y', strtotime($a->tgl_jam))}}</td>
+                                                    <td>{{ $a->nm_void}}</td>
+                                                    <td>{{ $a->ket_void}}</td>
 
-                                                    <td>
-                                                        <?php if(Session::get('role_id') == '3'): ?>
-                                                        <?php else: ?>
-                                                        <button type="button" class="btn btn-costume btn-sm void"
-                                                            data-toggle="modal" data-target="#modalvoid<?= $a->id ?>">
-                                                            <i class="fas fa-exclamation text-light"></i> Void
-                                                        </button>
-                                                        <?php endif ?>
-                                                    </td>
+
                                                 </tr>
                                                 @endforeach
 
