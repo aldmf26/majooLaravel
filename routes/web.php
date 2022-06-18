@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriSatuanController;
+use App\Http\Controllers\KomisiController;
+use App\Http\Controllers\listPenjualanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OpnameController;
 use App\Http\Controllers\PenjualanController;
@@ -78,13 +80,26 @@ Route::post('/edit_pembayaran', [PenjualanController::class, 'edit_pembayaran'])
 Route::get('/nota', [PenjualanController::class, 'nota'])->name('nota');
 
 
+Route::get('/listPenjualan', [listPenjualanController::class, 'index'])->name('listPenjualan');
+Route::get('/summary_penjualan_produk', [listPenjualanController::class, 'summary_penjualan_produk'])->name('summary_penjualan_produk');
+Route::get('/deletePenjualan', [listPenjualanController::class, 'deletePenjualan'])->name('deletePenjualan');
+Route::get('/excel_penjualan_produk', [listPenjualanController::class, 'excel_penjualan_produk'])->name('excel_penjualan_produk');
 
-Route::get('/listPenjualan', [ProdukController::class, 'index'])->name('listPenjualan');
+
 Route::get('/invoice', [ProdukController::class, 'index'])->name('invoice');
 Route::get('/dataVoid', [ProdukController::class, 'index'])->name('dataVoid');
 Route::get('/komisiPenjualan', [ProdukController::class, 'index'])->name('komisiPenjualan');
 Route::get('/laporan', [ProdukController::class, 'index'])->name('laporan');
-Route::get('/komisiTarget', [ProdukController::class, 'index'])->name('komisiTarget');
+
+
+Route::get('/komisiTarget', [KomisiController::class, 'komisiTarget'])->name('komisiTarget');
+Route::get('/komisiPenjualan', [KomisiController::class, 'komisiPenjualan'])->name('komisiPenjualan');
+Route::get('/excel_komisi_penjualan', [KomisiController::class, 'excel_komisi_penjualan'])->name('excel_komisi_penjualan');
+Route::get('/resto', [KomisiController::class, 'resto'])->name('resto');
+Route::post('/edit_rules_komisi', [KomisiController::class, 'edit_rules_komisi'])->name('edit_rules_komisi');
+Route::get('/drop_rules', [KomisiController::class, 'drop_rules'])->name('drop_rules');
+Route::get('/summary_komisi_penjualan', [KomisiController::class, 'summary_komisi_penjualan'])->name('summary_komisi_penjualan');
+Route::get('/orchard', [KomisiController::class, 'orchard'])->name('orchard');
 
 // kategori & satuan
 Route::get('/kategoriSatuan', [KategoriSatuanController::class, 'index'])->name('kategoriSatuan');
