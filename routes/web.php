@@ -5,6 +5,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\KategoriSatuanController;
 use App\Http\Controllers\KomisiController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\listPenjualanController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OpnameController;
@@ -86,11 +87,8 @@ Route::get('/summary_penjualan_produk', [listPenjualanController::class, 'summar
 Route::get('/deletePenjualan', [listPenjualanController::class, 'deletePenjualan'])->name('deletePenjualan');
 Route::get('/excel_penjualan_produk', [listPenjualanController::class, 'excel_penjualan_produk'])->name('excel_penjualan_produk');
 
-
-Route::get('/invoice', [ProdukController::class, 'index'])->name('invoice');
-
-Route::get('/komisiPenjualan', [ProdukController::class, 'index'])->name('komisiPenjualan');
-Route::get('/laporan', [ProdukController::class, 'index'])->name('laporan');
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+Route::post('/laporanExcel', [LaporanController::class, 'laporanExcel'])->name('laporanExcel');
 
 
 Route::get('/komisiTarget', [KomisiController::class, 'komisiTarget'])->name('komisiTarget');
@@ -132,6 +130,7 @@ Route::get('/hapusKaryawan', [KaryawanController::class, 'hapus'])->name('hapusK
 
 // invoice
 Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
+Route::get('/invoiceSummary', [InvoiceController::class, 'invoiceSummary'])->name('invoiceSummary');
 Route::post('/void_penjualan', [InvoiceController::class, 'void_penjualan'])->name('void_penjualan');
 Route::get('/dataVoid', [Void_controller::class, 'index'])->name('dataVoid');
 

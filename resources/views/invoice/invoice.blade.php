@@ -58,7 +58,7 @@
                                                 @foreach ($invoice as $a)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td><a href="">{{$a->no_nota}}</a></td>
+                                                    <td><a href="{{ route('detail_invoice', ['invoice' => $a->no_nota]) }}">{{$a->no_nota}}</a></td>
                                                     <td>{{$a->lokasi}}</td>
                                                     <td>{{date('H:i', strtotime($a->tgl_input))}}</td>
                                                     <td>{{ number_format($a->mandiri_kredit,0)}}</td>
@@ -131,6 +131,37 @@
     </div>
 </form>
 
+<form action="{{ route('invoiceSummary') }}" method="GET">
+    <div class="modal fade" id="modal-summary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header btn-costume">
+                    <h4 class="modal-title text-light">Export Summary</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="">Dari</label>
+                                <input class="form-control" type="date" value="" id="tgl1" name="tgl1">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="">Sampai</label>
+                                <input class="form-control" type="date" value="" id="tgl2" name="tgl2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-costume">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <?php foreach ($invoice as $a) : ?>
 <form action="{{route('void_penjualan')}}" method="post">

@@ -69,4 +69,20 @@ class InvoiceController extends Controller
 
         return redirect()->route('invoice')->with('sukses', 'Data berhasil di void');
     }
+
+    public function invoiceSummary(Request $r)
+    {
+        $dt_a   = $r->tgl1;
+        $dt_b = $r->tgl2;
+        $id_lokasi = Session::get('id_lokasi');
+        $lokasi = $id_lokasi == '1' ? 'TAKEMORI' : 'SOONDOBU';
+        $data = array(
+            'title'  => "Laporan Invoice",
+            'invoice' => DB::select("SELECT * FROM tb_invoice as a  where a.tgl_jam between '$dt_a' and '$dt_b' and a.lokasi = '$lokasi' and a.status ='0' order by a.id DESC "),
+            'tgl1' => $r->tgl1,
+            'tgl2' => $r->tgl2,
+        );
+
+        return view('invoice.laporan',$data);
+    }
 }

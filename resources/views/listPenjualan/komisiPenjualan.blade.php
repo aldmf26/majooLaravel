@@ -28,7 +28,7 @@
                                     View</button>
                                 <!-- <button data-toggle="modal" data-target="#modal-summary" class="btn btn-sm btn-costume float-right ml-2"><i class="fas fa-print majoo"></i> Summary</button>
         <button data-toggle="modal" data-target="#modal-excel" class="btn btn-sm btn-costume float-right ml-2"><i class="fas fa-file-excel majoo"></i> Excel</button> -->
-                                <a href="<?= route('excel_komisi_penjualan', ['tgl1' => $tgl1, 'tgl2' => $tgl2]) ?>"
+                                <a target="_blank" href="<?= route('excel_komisi_penjualan', ['tgl1' => $tgl1, 'tgl2' => $tgl2]) ?>"
                                     class="btn btn-sm btn-costume float-right ml-2"><i class="fas fa-file-excel majoo"></i>
                                     Excel</a>
                                 <button data-toggle="modal" data-target="#rules"
@@ -482,6 +482,30 @@
     </form>
 @endsection
 @section('script')
+@if (Session::get('sukses'))
+<script>
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        icon: 'success',
+        title: "{{Session::get('sukses')}}"
+    });
+</script>
+@endif
+@if (Session::get('error'))
+<script>
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        icon: 'error',
+        title: "{{Session::get('error')}}"
+    });
+</script>
+@endif
     <script>
         $(document).ready(function() {
             function cek_rules() {

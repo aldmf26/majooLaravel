@@ -43,7 +43,7 @@
                                                 @foreach ($invoice as $a)
                                                 <tr>
                                                     <td>{{$i++}}</td>
-                                                    <td><a href="">{{$a->no_nota}}</a></td>
+                                                    <td><a href="{{ route('detail_invoice', ['invoice' => $a->no_nota]) }}">{{$a->no_nota}}</a></td>
                                                     <td>{{ number_format($a->total,0)}}</td>
                                                     <td>{{ number_format($a->bayar,0)}}</td>
                                                     <td>{{ date('d/m/Y', strtotime($a->tgl_jam))}}</td>
