@@ -72,7 +72,7 @@
 				</a>
 			</div>
 			<div class="col-md-4">
-				<a href="{{ route('auth', ['id_lokasi' => 3]) }}">
+				<a href="https://majoo.putrirembulan.com/AuthAdmin">
 					<div class="card">
 						<div class="card-body">
 							<center>

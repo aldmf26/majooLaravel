@@ -19,7 +19,7 @@
                   
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="float-left">Daftar Stok Produk aldi</h3>
+                            <h3 class="float-left">Daftar Stok Produk</h3>
                             <a href="{{ route('buatStokProduk') }}" class="btn btn-costume btn-sm float-right ml-2" ><i class="fa fa-truck-loading"></i> Stok Masuk</a>
                             <a href="#" class="btn btn-costume btn-sm float-right ml-2" data-toggle="modal" data-target="#view"><i class="fa fa-eye"></i> view</a>
                         </div>

@@ -52,7 +52,7 @@ class LoginController extends Controller
             }
             $r->session()->regenerate();
             $r->session()->put('nama', strtoupper($username));
-            return redirect()->intended('produk');
+            return redirect()->intended('penjualan');
         } else {
             return redirect()->route('auth', ['id_lokasi' => $id_lokasi])->with('error', 'Username / password salah!');
         }

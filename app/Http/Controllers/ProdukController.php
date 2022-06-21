@@ -42,7 +42,7 @@ class ProdukController extends Controller
             $r->file('image')->move('assets/uploads/', $r->file('image')->getClientOriginalName());
             $foto = $r->file('image')->getClientOriginalName();
         } else {
-            $foto = '';
+            $foto = 'not-available.png';
         }
 
         $data = [

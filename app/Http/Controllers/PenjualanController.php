@@ -295,17 +295,16 @@ class PenjualanController extends Controller
                         }
 
                         $nm_karyawan = '';
-                        $length = count($c->options->nm_karyawan);
+                        $length = count($c->options->nm_karyawan[0]);
                         $number = 1;
-                        foreach ($c->options->nm_karyawan as $key => $nm_karyawan) {
-                            foreach($nm_karyawan as $nm) {
-                                $nm_karyawan = $nm;
+                        foreach ($c->options->nm_karyawan as $key => $karyawan) {
+                            foreach($karyawan as $kar) {
+                                $nm_karyawan .= $kar;
                                 if ($number !== $length) {
                                     $nm_karyawan .= ', ';
                                 }
                                 $number++;
-                            }
-                            
+                            }   
                         }
                         
 
@@ -381,6 +380,26 @@ class PenjualanController extends Controller
                 return redirect()->route('detail_invoice', ['invoice' => $cek_nota->no_nota]);
             }
         }
+    }
+
+    public function nota(Request $r)
+    {
+        $no_nota = $r->invoice;
+        $invoice = DB::selectOne("SELECT a.*, b.* FROM tb_invoice as a
+        LEFT JOIN users as b ON a.admin = b.id_user
+        WHERE a.no_nota = '$no_nota'");
+
+        $produk = DB::select("SELECT a.harga as harga, a.nm_karyawan as nm_karyawan, a.jumlah as jumlah, c.nm_produk as nm_produk, c.harga as harga_asli, c.diskon as diskon FROM tb_pembelian as a
+        LEFT JOIN tb_invoice as b ON a.no_nota = b.no_nota
+        LEFT JOIN tb_produk as c ON a.id_produk = c.id_produk
+        WHERE a.no_nota = '$no_nota'");
+            $data = [
+                'title'  => "Nota", 
+                'invoice' => $invoice,
+                'produk' => $produk
+            ];
+        
+            return view('penjualan.nota', $data);
     }
 
     public function detail_invoice(Request $r)

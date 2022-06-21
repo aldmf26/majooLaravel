@@ -329,7 +329,7 @@
           var catatan = $("#cart_catatan").val();
         //   var kd_karyawan = $('.cart_id_karyawan').val();
         var kode = []
-          var kd_karyawan = $('input[name^="kd_karyawan"]').each(function() {
+          var kd_karyawan = $('input[name^="kd_karyawan"]:checked').each(function() {
                 kode.push($(this).val())
                 
             });
