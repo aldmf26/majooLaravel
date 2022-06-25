@@ -79,67 +79,8 @@
                     </a>
                 </div>
                 <div class="col-sm-8 col-md-8">
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="semua" role="tabpanel"
-                            aria-labelledby="pills-home-tab">
-                            <div class="row" id="demonames">
-                                <?php foreach ($produk as $p) : ?>
-                                <div class="col-sm-6 col-md-4 col-lg-3 box all <?= $p->id_kategori ?>">
-                                    <?php if ($p->stok == '0') : ?>
-                                    <a style="color: #787878;" type="button">
-                                        <div class="card" style="background: rgba(0, 0, 0, 0.3);">
-                                            <div class="card-body">
-                                                <?php if (empty($p->foto)) : ?>
-                                                <img src="" alt="">
-                                                <?php else : ?>
-                                                <img class="img-thumbnail" loading=”lazy” width="170"
-                                                    style="opacity: 0.5;"
-                                                    src="<?= asset('assets') ?>/uploads/produk/{{$p->foto}}" alt="">
-                                                <?php endif ?>
-                                                <h4 class="tes text-danger">Stok Habis</h4>
-                                                <h6 class="mt-2 text-sm demoname">
-                                                    <?= $p->nm_produk ?>
-                                                </h6>
-                                                <h6 style="font-weight: bold;">Rp .
-                                                    <?= number_format($p->harga) ?>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <?php else : ?>
-
-                                    <a href="" id_produk="{{$p->id_produk}}" style="color: #787878;" type="button"
-                                        data-toggle="modal" data-target="#myModal" class="open-product btnInput">
-
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <?php if (empty($p->foto)) : ?>
-                                                <img src="" alt="">
-                                                <?php else : ?>
-                                                <img class="img-thumbnail" loading=”lazy” width="170"
-                                                    src="<?= asset('assets') ?>/uploads/produk/{{$p->foto}}" alt="">
-                                                <?php endif ?>
-                                                <h6 class="mt-2 text-sm demoname">
-                                                    <?= $p->nm_produk ?>
-                                                </h6>
-                                                <h6 style="font-weight: bold;">Rp .
-                                                    <?= number_format($p->harga) ?>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </a>
-
-
-                                    <?php endif ?>
-                                </div>
-
-
-                                <?php endforeach ?>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="konten"></div>
                 </div>
-
                 <div class="col-sm-4 col-md-4" id="cart">
 
                 </div>
@@ -287,6 +228,35 @@
 @section('script')
 <script>
     $(document).ready(function() {
+        var url = "{{ route('tabelProduk') }}?page=1"
+        getSearch(url)
+        function getSearch(url){
+            $("#konten").load(url, "data", function (response, status, request) {
+                this; // dom element  
+                      
+            });
+        }
+        $(document).on('keyup', '#search_field', function(){
+            var s = this.value
+            console_log(s)
+            var url = "{{ route('tabelProduk') }}?search="+s
+            getSearch(url)
+        });
+
+
+        getPage(1)
+        $(document).on('click', '.page-link', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            getPage(page)
+        });
+
+        function getPage(page){
+            $("#konten").load("{{ route('tabelProduk') }}?page="+page, "data", function (response, status, request) {
+                this; // dom element  
+                      
+            });
+        }
         load_cart();
     
         function load_cart() {

@@ -60,6 +60,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Komisi Penjualan</th>
                                         <th>Komisi</th>
                                         <th>Komisi Target</th>
                                     </tr>
@@ -68,6 +69,7 @@
                                     <?php $i = 1;
                                     $ttl_komisi = 0;
                                     $ttl_komisi_trg = 0;
+                                    $ttl_komisiPenjualan = 0;
                                     foreach ($komisi as $k) :
                                         if ($k->nm_karyawan == 'SDB' || $k->nm_karyawan == 'TKMR') {
                                             continue;
@@ -94,12 +96,14 @@
 
                                         $ttl_komisi_trg += $trg_komisi;
                                         $ttl_komisi += $k->dt_komisi;
+                                        $ttl_komisiPenjualan += $k->komisi_penjualan;
 
                                     ?>
                                         <tr>
                                             <td><?= $i++ ?></td>
 
                                             <td><?= $k->nm_karyawan ?></td>
+                                            <td><?= number_format($k->komisi_penjualan,0) ?></td>
                                             <td><?= number_format($k->dt_komisi, 0) ?></td>
                                             <td><?= number_format($trg_komisi, 0) ?></td>
 
@@ -109,11 +113,13 @@
                                 <tfoot>
                                     <tr>
                                         <th colspan="2">TOTAL</th>
+                                        <th><?= number_format($ttl_komisiPenjualan, 0); ?></th>
                                         <th><?= number_format($ttl_komisi, 0); ?></th>
                                         <th><?= number_format($ttl_komisi_trg, 0); ?></th>
                                     </tr>
                                     <tr>
                                         <th colspan="2">Beban Resto</th>
+                                        <th><?= number_format($komisi_resto->beban_penjualan, 0); ?></th>
                                         <th><?= number_format($komisi_resto->beban_komisi, 0); ?></th>
                                         <?php
                                         if($ttl_komisi == 0) {
@@ -140,7 +146,9 @@
                                                 $beban_target_orchard = 0;
                                             } ?>
                                         <th><?= number_format($beban_target_orchard, 0); ?></th>
+                                        <th><?= number_format($beban_target_orchard, 0); ?></th>
                                         @else
+                                        <th><?= number_format(0, 0); ?></th>
                                         <th><?= number_format(0, 0); ?></th>
                                         <th><?= number_format(0, 0); ?></th>
                                         @endif

@@ -39,7 +39,7 @@ class ProdukController extends Controller
     public function tambah(Request $r)
     {
         if ($r->hasFile('image')) {
-            $r->file('image')->move('assets/uploads/', $r->file('image')->getClientOriginalName());
+            $r->file('image')->move('assets/uploads/produk/', $r->file('image')->getClientOriginalName());
             $foto = $r->file('image')->getClientOriginalName();
         } else {
             $foto = 'not-available.png';

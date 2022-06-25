@@ -19,7 +19,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="float-left">Daftar Produk nanda</h3>
+                            <h3 class="float-left">Daftar Produk</h3>
                             <a href="#" class="btn btn-costume btn-sm float-right" data-toggle="modal"
                                 data-target="#tambah"><i class="fa fa-plus"></i> Produk</a>
                         </div>
@@ -101,7 +101,7 @@
 
 
 {{-- tambah --}}
-<form action="{{ route('tambahProduk') }}" method="post">
+<form action="{{ route('tambahProduk') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="tambah">
         <div class="modal-dialog modal-lg">

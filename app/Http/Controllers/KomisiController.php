@@ -110,7 +110,7 @@ class KomisiController extends Controller
         }
 
         $lokasi = $r->lokasi;
-        $komisi = DB::select("SELECT a.id, b.no_nota, c.nm_karyawan, sum(a.komisi) AS dt_komisi, b.lokasi, d.id_kategori, e.nm_kategori,
+        $komisi = DB::select("SELECT SUM(b.harga) as komisi_penjualan,a.id, b.no_nota, c.nm_karyawan, sum(a.komisi) AS dt_komisi, b.lokasi, d.id_kategori, e.nm_kategori,
         if(d.id_kategori = '6' , e.nm_kategori, b.lokasi) AS lokasi2
         FROM komisi AS a
         LEFT JOIN tb_pembelian AS b ON b.id_pembelian = a.id_pembelian
@@ -132,7 +132,7 @@ class KomisiController extends Controller
         AND a.id_kry != 419
         GROUP BY a.id_kry");
 
-        $komisi_resto = DB::selectOne("SELECT SUM(a.komisi) as beban_komisi, b.*, c.*, a.* FROM `komisi` as a
+        $komisi_resto = DB::selectOne("SELECT SUM(b.harga) as beban_penjualan,SUM(a.komisi) as beban_komisi, b.*, c.*, a.* FROM `komisi` as a
         LEFT JOIN tb_pembelian as b ON a.id_pembelian = b.id_pembelian
         LEFT JOIN tb_produk as c ON b.id_produk = c.id_produk
         WHERE a.tgl BETWEEN '$tgl1' AND '$tgl2'

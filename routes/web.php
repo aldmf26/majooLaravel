@@ -80,6 +80,7 @@ Route::post('/checkout', [PenjualanController::class, 'checkout'])->name('checko
 Route::get('/detail_invoice', [PenjualanController::class, 'detail_invoice'])->name('detail_invoice');
 Route::post('/edit_pembayaran', [PenjualanController::class, 'edit_pembayaran'])->name('edit_pembayaran');
 Route::get('/nota', [PenjualanController::class, 'nota'])->name('nota');
+Route::get('/tabelProduk', [PenjualanController::class, 'tabelProduk'])->name('tabelProduk');
 
 
 Route::get('/listPenjualan', [listPenjualanController::class, 'index'])->name('listPenjualan');

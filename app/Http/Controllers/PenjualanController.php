@@ -24,8 +24,24 @@ class PenjualanController extends Controller
             'produk' => Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->orderBy('tb_produk.id_produk', 'ASC')->get(),
             'id_lokasi' => $id_lokasi,
         ];
-        Cart::destroy();
         return view('penjualan.penjualan', $data);
+    }
+
+    public function tabelProduk(Request $r)
+    {
+        $id_lokasi = Session::get('id_lokasi');
+        if ($r->search == null) {         
+            $produk = Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->orderBy('tb_produk.id_produk', 'ASC')->paginate(20);
+            
+        } else {
+            $produk = Produk::join('tb_kategori', 'tb_produk.id_kategori', 'tb_kategori.id_kategori')->join('tb_satuan', 'tb_produk.id_satuan', 'tb_satuan.id_satuan')->where('tb_produk.id_lokasi', $id_lokasi)->whereLike('tb_produk.nm_produk', $r->search)->orderBy('tb_produk.id_produk', 'ASC')->paginate(20);
+        }
+
+        $data = [
+            'title' => 'produk',
+            'produk' => $produk,
+        ];
+        return view('penjualan.pr', $data);
     }
 
     public function get_cart(Request $r)
